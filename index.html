@@ -31,22 +31,27 @@
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputEncoding = THREE.sRGBEncoding;
     document.body.appendChild(renderer.domElement);
 
+    // Lights
     const light1 = new THREE.DirectionalLight(0xffffff, 2);
     light1.position.set(10, 10, 10);
     scene.add(light1);
     const light2 = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(light2);
 
+    // Camera and controls
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
 
+    // Load GLB model
     const loader = new GLTFLoader();
     loader.load(
-      'poultryfarm.glb',
+      'poultryfarm.glb', // <-- your .glb file name here
       (gltf) => {
         const model = gltf.scene;
+        model.position.set(0, 0, 0);
         scene.add(model);
         document.getElementById('loading').style.display = 'none';
       },
@@ -61,6 +66,7 @@
 
     camera.position.set(2, 2, 3);
 
+    // Animate
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
@@ -68,6 +74,7 @@
     }
     animate();
 
+    // Resize handling
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
