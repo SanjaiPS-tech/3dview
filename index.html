@@ -48,7 +48,7 @@
     // Load GLB model
     const loader = new GLTFLoader();
     loader.load(
-      'poultryfarm.glb', // <-- your .glb file name here
+      './poultryfarm.glb', // <-- your .glb file name here
       (gltf) => {
         const model = gltf.scene;
         model.position.set(0, 0, 0);
@@ -83,3 +83,4 @@
   </script>
 </body>
 </html>
+
